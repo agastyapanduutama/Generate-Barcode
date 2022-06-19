@@ -18,7 +18,7 @@
         <div class="container-fluid">
             <div class="card text-center">
                 <div class="card-header">
-                    Generate Barcode
+                    Generate QRCode
                 </div>
                 <center>
                     <form action="" method="POST">
@@ -39,22 +39,18 @@
         <div class="container-fluid">
             <div class="card text-center">
                 <div class="card-header">
-                    Barcode
+                    QRCode
                 </div>
                 <?php
                     if (isset($_POST['generate'])){
                         /*create folder*/
-                        $tempdir="img-barcode/";
+                        $tempdir="img-qrcode/";
                         if (!file_exists($tempdir))
                         mkdir($tempdir, 0755);
                         $target_path=$tempdir . $_POST['kode'] . ".png";
 
-                        /*using server online
-                        $protocol=stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://';
-                        $fileImage=$protocol . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/php-barcode/library_barcode.php?text=" . $_POST['kode_barang'] . "&codetype=code128&print=true&size=55";
-                        */
                         /*using server localhost*/
-                        $fileImage="http://localhost".dirname($_SERVER['PHP_SELF']) . "/library_barcode.php?text=" . $_POST['kode'] . "&codetype=code128&print=true&size=55";
+                        $fileImage="https://chart.googleapis.com/chart?chs=350x350&cht=qr&chld=M|1&choe=UTF-8&chl=" . $_POST['kode'];
 
                         /*get content from url*/
                         $content=file_get_contents($fileImage);
@@ -64,7 +60,7 @@
 
                         echo "
                         <p class='result'>Result :</p>
-                        <p><img src='library_barcode.php?text=" . $_POST['kode'] . "&codetype=code39&print=true&size=55' /></p>
+                        <p><img src=' " . $tempdir . $_POST['kode'] . ".png'></p>
                         ";
                     }
                     ?>
